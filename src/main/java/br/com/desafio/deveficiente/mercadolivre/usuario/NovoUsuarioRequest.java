@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 
 public class NovoUsuarioRequest {
 
@@ -37,8 +36,7 @@ public class NovoUsuarioRequest {
                 '}';
     }
 
-
     public Usuario toModel() {
-        return new Usuario(login,UsuarioUtils.hash(senha));
+        return new Usuario(login,new Senha(senha));
     }
 }

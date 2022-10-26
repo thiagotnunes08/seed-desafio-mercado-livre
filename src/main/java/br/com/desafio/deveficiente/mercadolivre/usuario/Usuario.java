@@ -1,8 +1,13 @@
 package br.com.desafio.deveficiente.mercadolivre.usuario;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static java.time.LocalDateTime.*;
 
 @Entity
 public class Usuario {
@@ -18,11 +23,14 @@ public class Usuario {
     private String senha;
 
     @Column(nullable = false)
-    private final LocalDateTime cadastradoEm = LocalDateTime.now();
+    private LocalDateTime cadastradoEm;
 
-    public Usuario(String login, String senha) {
+    public Usuario(String login, Senha senha) {
         this.login = login;
-        this.senha = senha;
+        Assert.isTrue(StringUtils.hasLength(login),"email nao poderia estar em branco!");
+        Assert.notNull(senha, "senha nao deveria ser nula");
+        this.senha = senha.hash();
+        this.cadastradoEm = now();
     }
 
     /**

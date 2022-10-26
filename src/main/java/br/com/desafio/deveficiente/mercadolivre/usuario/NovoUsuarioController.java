@@ -1,14 +1,10 @@
 package br.com.desafio.deveficiente.mercadolivre.usuario;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -25,6 +21,8 @@ public class NovoUsuarioController {
 
         Usuario novoUsuario = request.toModel();
         repository.save(novoUsuario);
+
+
 
 
     }

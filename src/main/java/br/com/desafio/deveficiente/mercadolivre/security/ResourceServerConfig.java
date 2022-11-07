@@ -1,9 +1,16 @@
 package br.com.desafio.deveficiente.mercadolivre.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 
 @Configuration
@@ -17,9 +24,25 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
+                .cors()
+                .and()
                 .oauth2ResourceServer()
-                .opaqueToken();
+                .jwt();
 
     }
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
+
+    @Bean
+    public JwtDecoder jwtDecoder(){
+        SecretKeySpec secretKey = new SecretKeySpec("DHSAUIHDuidhuiHDIUSAHDUIhduISAHIUDAIUSDHUihduiasduiah".getBytes(), "HmacSHA256");
+        return NimbusJwtDecoder.withSecretKey(secretKey).build();
+    }
+
 
 }

@@ -2,15 +2,17 @@ package br.com.desafio.deveficiente.mercadolivre.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Configuration
@@ -21,13 +23,20 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .antMatchers(HttpMethod.POST, "/api/v1/usuarios/**").hasAuthority("GRAVACAO")
+                .antMatchers(HttpMethod.PUT, "/api/v1/usuarios/**").hasAuthority("GRAVACAO")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/usuarios/**").hasAuthority("GRAVACAO")
+                .antMatchers(HttpMethod.PATCH, "/api/v1/usuarios/**").hasAuthority("GRAVACAO")
+                .antMatchers(HttpMethod.GET, "/api/v1/usuarios/**").hasAuthority("LEITURA")
+//                .anyRequest().authenticated()
+                .anyRequest().denyAll()
                 .and()
+                .csrf().disable()
                 .cors()
                 .and()
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt()
+                .jwtAuthenticationConverter(jwtAuthenticationConverter());
 
     }
 
@@ -37,11 +46,24 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
+    private JwtAuthenticationConverter jwtAuthenticationConverter() {
+        var authenticationConverter = new JwtAuthenticationConverter();
 
-    @Bean
-    public JwtDecoder jwtDecoder(){
-        SecretKeySpec secretKey = new SecretKeySpec("DHSAUIHDuidhuiHDIUSAHDUIhduISAHIUDAIUSDHUihduiasduiah".getBytes(), "HmacSHA256");
-        return NimbusJwtDecoder.withSecretKey(secretKey).build();
+        authenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            List<String> authorities = jwt.getClaimAsStringList("authorities");
+
+            if (authorities == null) {
+                authorities = Collections.emptyList();
+            }
+
+            return authorities
+                    .stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+
+        });
+
+        return authenticationConverter;
     }
 
 

@@ -18,9 +18,9 @@ public class JpaDetailsService implements UserDetailsService {
     @Autowired
     private UsuarioRepository repository;
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<Usuario> possivelUsuario = repository.findByLogin(login);
+        Optional<Usuario> possivelUsuario = repository.findByUserName(username);
 
         if (possivelUsuario.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"USUÁRIO NAO ENCONTRADO!");
@@ -30,4 +30,6 @@ public class JpaDetailsService implements UserDetailsService {
 
         return new UserAuth(usuario);
     }
+
+
 }

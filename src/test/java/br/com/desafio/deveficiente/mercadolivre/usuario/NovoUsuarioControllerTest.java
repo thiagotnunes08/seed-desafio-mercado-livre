@@ -32,7 +32,7 @@ class NovoUsuarioControllerTest {
     @DisplayName("deve cadastrar um usuario")
     void test1() throws Exception {
 
-        var novoUsuario = new NovoUsuarioRequest("thiago@email", "123456");
+        var novoUsuario = new NovoUsuarioRequest("thiago tomaz","thiago@email", "123456");
 
         var payload = mapper.writeValueAsString(novoUsuario);
 
@@ -50,7 +50,7 @@ class NovoUsuarioControllerTest {
     @DisplayName("nao deve cadastrar um usuario, pois parametros vazios")
     void test2() throws Exception {
 
-        var novoUsuario = new NovoUsuarioRequest("", "");
+        var novoUsuario = new NovoUsuarioRequest("","", "");
 
         var payload = mapper.writeValueAsString(novoUsuario);
 
@@ -68,7 +68,7 @@ class NovoUsuarioControllerTest {
     @DisplayName("nao deve cadastrar um usuario, pois parametros nulos")
     void test3() throws Exception {
 
-        var novoUsuario = new NovoUsuarioRequest(null, null);
+        var novoUsuario = new NovoUsuarioRequest("",null, null);
 
         var payload = mapper.writeValueAsString(novoUsuario);
 
@@ -86,7 +86,7 @@ class NovoUsuarioControllerTest {
     @DisplayName("nao deve cadastrar um usuario, pois email deve estar bem formatado")
     void test4() throws Exception {
 
-        var novoUsuario = new NovoUsuarioRequest("umaString", "123456");
+        var novoUsuario = new NovoUsuarioRequest("aaaaa","umaString", "123456");
 
         var payload = mapper.writeValueAsString(novoUsuario);
 
@@ -104,7 +104,7 @@ class NovoUsuarioControllerTest {
     @DisplayName("nao deve cadastrar um usuario, pois senha deve ter no minimo 6 caracteres")
     void test5() throws Exception {
 
-        var novoUsuario = new NovoUsuarioRequest("thiago@email.com", "12345");
+        var novoUsuario = new NovoUsuarioRequest("aaaaaaa","thiago@email.com", "12345");
 
         var payload = mapper.writeValueAsString(novoUsuario);
 

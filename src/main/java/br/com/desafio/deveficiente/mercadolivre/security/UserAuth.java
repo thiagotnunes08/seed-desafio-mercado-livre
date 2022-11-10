@@ -7,13 +7,15 @@ import java.util.Collections;
 
 public class UserAuth extends User {
 
-    private String usuario;
-    private String senha;
+    private String nome;
 
     public UserAuth(Usuario usuario) {
-        super(usuario.getLogin(),usuario.getSenha(), Collections.emptyList());
+        super(usuario.getUserName(),usuario.getSenha(), Collections.emptyList());
 
-        this.usuario = usuario.getLogin();
-        this.senha = usuario.getSenha();
+       this.nome = usuario.getNome();
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

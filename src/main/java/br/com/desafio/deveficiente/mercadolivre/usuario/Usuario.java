@@ -16,7 +16,10 @@ public class Usuario {
     private Long id;
 
     @Column(nullable = false)
-    private String login;
+    private String userName;
+
+    @Column(nullable = false)
+    private String nome;
 
     @Column(nullable = false)
     private String senha;
@@ -24,9 +27,10 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDateTime cadastradoEm;
 
-    public Usuario(String login, Senha senha) {
-        this.login = login;
-        Assert.isTrue(StringUtils.hasLength(login),"email nao poderia estar em branco!");
+    public Usuario(String nome, String userName, Senha senha) {
+        this.nome = nome;
+        this.userName = userName;
+        Assert.isTrue(StringUtils.hasLength(userName),"email nao poderia estar em branco!");
         Assert.notNull(senha, "senha nao deveria ser nula");
         this.senha = senha.hash();
         this.cadastradoEm = now();
@@ -43,11 +47,15 @@ public class Usuario {
         return id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUserName() {
+        return userName;
     }
 
     public String getSenha() {
         return senha;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

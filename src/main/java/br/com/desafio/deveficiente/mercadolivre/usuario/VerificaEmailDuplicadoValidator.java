@@ -27,8 +27,8 @@ public class VerificaEmailDuplicadoValidator implements Validator {
         }
         NovoUsuarioRequest request = (NovoUsuarioRequest) target;
 
-        Query query = manager.createQuery("select 1 from Usuario u where u.login = :login")
-                .setParameter("login", request.getLogin());
+        Query query = manager.createQuery("select 1 from Usuario u where u.userName = :login")
+                .setParameter("login", request.getUserName());
 
         List<?> resultList = query.getResultList();
 

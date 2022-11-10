@@ -1,5 +1,6 @@
 package br.com.desafio.deveficiente.mercadolivre.usuario;
 
+import br.com.desafio.deveficiente.mercadolivre.security.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
@@ -17,17 +18,22 @@ public class BuscaUsuarioPorIdController {
 
     @Autowired
     private final UsuarioRepository repository;
+
     public BuscaUsuarioPorIdController(UsuarioRepository repository) {
         this.repository = repository;
     }
-    @PreAuthorize("hasAuthority('LEITURA')")
+
+
+    //    @PreAuthorize("hasAuthority('LEITURA')")
+    //no lugar de "leitura" poderia ser o nome do dominio, pra deixar mais especifico.
+    @Authorization.Leitura.PodeConsultarDados
     @GetMapping("{id}")
-    public ResponseEntity<?> busca(@PathVariable Long id){
+    public ResponseEntity<?> busca(@PathVariable Long id) {
 
         Usuario usuario = repository
                 .findById(id)
                 .orElseThrow(
-                        ()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"usuário não encontrado no sistema!"));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "usuário não encontrado no sistema!"));
 
         return ResponseEntity.ok(new UsuarioResponse(usuario));
 

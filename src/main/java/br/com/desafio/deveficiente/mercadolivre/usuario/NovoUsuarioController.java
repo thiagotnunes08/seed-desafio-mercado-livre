@@ -1,4 +1,5 @@
 package br.com.desafio.deveficiente.mercadolivre.usuario;
+import br.com.desafio.deveficiente.mercadolivre.security.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,7 +25,9 @@ public class NovoUsuarioController {
         this.validator = validator;
     }
 
-    @PreAuthorize("hasAuthority('GRAVACAO')")
+    //funciona de ambas formnas, porém a segunda evita codigo duplicado!
+    //@PreAuthorize("hasAuthority('GRAVACAO')")
+    @Authorization.Gravacao.PodeEditarDados
     @PostMapping
     public void cadastra(@Valid @RequestBody NovoUsuarioRequest request) {
 

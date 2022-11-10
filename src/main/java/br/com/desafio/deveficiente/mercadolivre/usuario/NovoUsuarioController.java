@@ -1,5 +1,6 @@
 package br.com.desafio.deveficiente.mercadolivre.usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class NovoUsuarioController {
         this.validator = validator;
     }
 
+    @PreAuthorize("hasAuthority('GRAVACAO')")
     @PostMapping
     public void cadastra(@Valid @RequestBody NovoUsuarioRequest request) {
 

@@ -27,13 +27,13 @@ public class VerificaEmailDuplicadoValidator implements Validator {
         }
         NovoUsuarioRequest request = (NovoUsuarioRequest) target;
 
-        Query query = manager.createQuery("select 1 from Usuario u where u.userName = :login")
-                .setParameter("login", request.getUserName());
+        Query query = manager.createQuery("select 1 from Usuario u where u.userName = :userName")
+                .setParameter("userName", request.getUserName());
 
         List<?> resultList = query.getResultList();
 
         if (!resultList.isEmpty()){
-            errors.rejectValue("login",null,"já existe este email no sistema!");
+            errors.rejectValue("userName",null,"já existe este email no sistema!");
         }
 
     }

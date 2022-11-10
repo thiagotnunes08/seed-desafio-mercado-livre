@@ -38,7 +38,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("desafio-mercado-livre")
                 .secret(passwordEncoder.encode("123"))
                 .authorizedGrantTypes("refresh_token","password")
-                .scopes("write", "read")
+                .scopes("WRITE", "READ")
                 .accessTokenValiditySeconds(60 * 60 * 6)
                 .refreshTokenValiditySeconds(60 * 24 * 60 * 60)//refresh_token de 60 dias
                 .and()
@@ -48,7 +48,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("teste")
                 .secret(passwordEncoder.encode("123"))
                 .authorizedGrantTypes("password")
-                .scopes("write", "read")
+                .scopes("WRITE", "READ")
            .accessTokenValiditySeconds(60 * 60 * 6) //duração de 6 horas
 
 
@@ -57,14 +57,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("faturamento")
                 .secret(passwordEncoder.encode("faturamento123"))
                 .authorizedGrantTypes("client_credentials")
-                .scopes("read","write")
+                .scopes("READ","WRITE")
 
 
                 .and()
                 .withClient("mercado-livre-code")
                 .secret(passwordEncoder.encode(""))
                 .authorizedGrantTypes("authorization_code") //poderia ter refresh_tokens tmb
-                .scopes("read","write")
+                .scopes("READ","WRITE")
                 .redirectUris("http://aplicacao-cliente")//posso ter mais de uma URL
 
 
@@ -72,7 +72,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .and()
                 .withClient("mercado-implicit")
                 .authorizedGrantTypes("implicit") //nao funciona com refresh token
-                .scopes("write","read")
+                .scopes("WRITE","READ")
                 .redirectUris("http://client");
 
 

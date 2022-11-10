@@ -9,14 +9,14 @@ public @interface Authorization {
 
     public @interface Gravacao{
 
-        @PreAuthorize("hasAuthority('GRAVACAO')")
+        @PreAuthorize("hasAuthority('SCOPE_WRITE') and hasAuthority('GRAVACAO')")
         @Retention(RetentionPolicy.RUNTIME)
         public @interface PodeEditarDados {}
 
     }
     public @interface Leitura{
 
-        @PreAuthorize("hasAuthority('LEITURA')")
+        @PreAuthorize("hasAuthority('SCOPE_READ') and hasAuthority('LEITURA')")
         @Retention(RetentionPolicy.RUNTIME)
         public @interface PodeConsultarDados {}
 

@@ -2,6 +2,7 @@ package br.com.desafio.deveficiente.mercadolivre.usuario;
 import br.com.desafio.deveficiente.mercadolivre.security.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class NovoUsuarioController {
     @Authorization.Gravacao.PodeEditarDados
     @PostMapping
     public void cadastra(@Valid @RequestBody NovoUsuarioRequest request) {
+
 
 
         Usuario novoUsuario = request.toModel();

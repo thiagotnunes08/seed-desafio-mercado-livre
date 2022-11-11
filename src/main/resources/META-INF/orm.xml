@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+        xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+        version="2.2">
+
+
+
+    <named-query name="Loja.existsResponsavel">
+        <query>
+            select case when count(1) > 0 then true else false end
+            from Loja j
+            join j.responsaveis resp
+            where j.id = :lojaId
+            and resp.id = :usuarioId
+        </query>
+    </named-query>
+
+</entity-mappings>

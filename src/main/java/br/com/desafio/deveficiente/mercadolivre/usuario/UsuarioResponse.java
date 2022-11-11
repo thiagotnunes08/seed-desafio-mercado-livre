@@ -6,7 +6,7 @@ public class UsuarioResponse {
 
     public UsuarioResponse(Usuario usuario) {
         this.id = usuario.getId();
-        this.login = usuario.getUserName();
+        this.login = usuario.getEmail();
     }
 
     public Long getId() {

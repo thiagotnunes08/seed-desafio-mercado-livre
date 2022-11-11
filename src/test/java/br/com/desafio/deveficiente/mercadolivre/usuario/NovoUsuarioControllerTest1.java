@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class NovoUsuarioControllerTest {
+class NovoUsuarioControllerTest1 {
 
     @Autowired
     private ObjectMapper mapper;

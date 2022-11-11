@@ -10,7 +10,7 @@ public class UserAuth extends User {
     private String nome;
 
     public UserAuth(Usuario usuario) {
-        super(usuario.getUserName(),usuario.getSenha(), Collections.emptyList());
+        super(usuario.getEmail(), usuario.getSenha(), Collections.emptyList());
 
        this.nome = usuario.getNome();
     }

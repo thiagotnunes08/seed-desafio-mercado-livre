@@ -12,7 +12,8 @@ public @interface Authorization {
 
     public @interface Gravacao{
 
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') and hasAuthority('GRAVACAO')")
+        @PreAuthorize("hasAuthority('SCOPE_WRITE') and hasAuthority('GR" +
+                "AVACAO')")
         @Retention(RetentionPolicy.RUNTIME)
         public @interface PodeEditarDados {}
 

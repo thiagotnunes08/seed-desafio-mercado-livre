@@ -34,4 +34,7 @@ public class MercadoLivreSecutiry {
         return respository.existsResponsavel(lojaId,getUsuarioId());
     }
 
+    //TODO refazer logica client credencials. Aula:23.38 alga works
+
+
 }

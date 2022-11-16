@@ -28,6 +28,9 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .formLogin().loginPage("/login")
+                .and()
+
 //        http.authorizeRequests()
 //                .antMatchers(HttpMethod.POST, "/api/v1/usuarios/**").hasAuthority("GRAVACAO")
 //                .antMatchers(HttpMethod.PUT, "/api/v1/usuarios/**").hasAuthority("GRAVACAO")

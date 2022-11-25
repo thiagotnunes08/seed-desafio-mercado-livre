@@ -2,6 +2,7 @@ package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.categoria.CategoriaRepository;
+import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,6 +10,11 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NovoProdutoRequest {
 
@@ -23,16 +29,55 @@ public class NovoProdutoRequest {
     @NotNull
     @Min(value = 0)
     private Integer quantidadeDisponivel;
-    @Valid
+
     @NotNull
-    //TODO testar @Size. pois é necessário ter pelo menos 3 caracteristicas.
-    private CaracteristicasDeProdutoRequest caracteristicas;
+    @Size(min = 3)
+    @Valid
+    private List<CaracteristicasDeProdutoRequest> caracteristicas = new ArrayList<>();
     @NotBlank
     @Length(max = 1000)
     private String descricao;
     @NotNull
     //TODO Colocar uma annotacion "ExistsId" por exemplo
     private Long categoriaId;
+
+    public NovoProdutoRequest(String nome, BigDecimal valor, Integer quantidadeDisponivel, List<CaracteristicasDeProdutoRequest> caracteristicas, String descricao, Long categoriaId) {
+        this.nome = nome;
+        this.valor = valor;
+        this.quantidadeDisponivel = quantidadeDisponivel;
+        this.caracteristicas.addAll(caracteristicas);
+        this.descricao = descricao;
+        this.categoriaId = categoriaId;
+    }
+
+    public Produto toModel(CategoriaRepository categoriaRepository, Usuario dono) {
+        Categoria categoria = categoriaRepository.findById(categoriaId)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Categoria não encontrada no sistema!"));
+
+        List<CaracteristicasDeProduto> caracteristicasList = caracteristicas.stream()
+                .map(CaracteristicasDeProdutoRequest::toCaractreisticas)
+                .collect(Collectors.toList());
+
+        return new Produto(nome,valor,quantidadeDisponivel,caracteristicasList,descricao,categoria,dono);
+    }
+
+    public Set<String> buscaCaractreristicas() {
+
+        HashSet<String> nomesIguais = new HashSet<>();
+
+        HashSet<String> resultados = new HashSet<>();
+
+        for (CaracteristicasDeProdutoRequest caracterisca : caracteristicas){
+            String nome = caracterisca.getNome();
+
+            if (!nomesIguais.add(nome)){
+                resultados.add(nome);
+
+            }
+        }
+        return resultados;
+    }
 
 
     public String getNome() {
@@ -47,7 +92,7 @@ public class NovoProdutoRequest {
         return quantidadeDisponivel;
     }
 
-    public CaracteristicasDeProdutoRequest getCaracteristicas() {
+    public List<CaracteristicasDeProdutoRequest> getCaracteristicas() {
         return caracteristicas;
     }
 
@@ -57,14 +102,5 @@ public class NovoProdutoRequest {
 
     public Long getCategoriaId() {
         return categoriaId;
-    }
-
-
-    public Produto toModel(CategoriaRepository categoriaRepository) {
-
-        Categoria categoria = categoriaRepository.findById(categoriaId)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Categoria não encontrada no sistema!"));
-
-        return new Produto(nome,valor,quantidadeDisponivel,caracteristicas.toModel(),descricao,categoria);
     }
 }

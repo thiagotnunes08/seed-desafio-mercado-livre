@@ -2,10 +2,13 @@ package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Produto {
@@ -23,8 +26,8 @@ public class Produto {
     @Column(nullable = false)
     private Integer quantidadeDisponivel;
 
-    @Embedded
-    private CaracteristicasDeProduto caracteristicas;
+    @ElementCollection
+    private List<CaracteristicasDeProduto> caracteristicas = new ArrayList<>();
 
     @Column(nullable = false)
     private String descricao;
@@ -38,14 +41,17 @@ public class Produto {
     @ManyToOne
     private Usuario dono;
 
-    public Produto(String nome, BigDecimal valor, Integer quantidadeDisponivel, CaracteristicasDeProduto caracteristicas, String descricao, Categoria categoria) {
+    public Produto(String nome, BigDecimal valor, Integer quantidadeDisponivel, List<CaracteristicasDeProduto> caracteristicas, String descricao, Categoria categoria, Usuario dono) {
         this.nome = nome;
         this.valor = valor;
         this.quantidadeDisponivel = quantidadeDisponivel;
-        this.caracteristicas = caracteristicas;
+        this.caracteristicas.addAll(caracteristicas);
         this.descricao = descricao;
         this.categoria = categoria;
         criadoEm = LocalDateTime.now();
+        this.dono = dono;
+        Assert.isTrue(caracteristicas.size() >= 3,
+                "deveria haver no minimo, tres caracteristicas aki");
     }
 
     @Deprecated
@@ -62,6 +68,14 @@ public class Produto {
                 ", caracteristicas=" + caracteristicas +
                 ", descricao='" + descricao + '\'' +
                 ", categoria=" + categoria +
+                ", criadoEm=" + criadoEm +
+                ", dono=" + dono +
                 '}';
     }
+
+    public List<CaracteristicasDeProduto> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+
 }

@@ -1,39 +1,30 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
 
+import javax.validation.constraints.NotBlank;
+
 public class CaracteristicasDeProdutoRequest {
 
-    private String marca;
-    private String modelo;
-    private String material;
-    private String estilo;
+    @NotBlank
+    private String nome;
 
-    public String getMarca() {
-        return marca;
+    @NotBlank
+    private String descricao;
+
+    public CaracteristicasDeProdutoRequest(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
-    public String getModelo() {
-        return modelo;
+    public String getNome() {
+        return nome;
     }
 
-    public String getMaterial() {
-        return material;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public String getEstilo() {
-        return estilo;
+    public CaracteristicasDeProduto toCaractreisticas(){
+        return new CaracteristicasDeProduto(nome,descricao);
     }
 
-    @Override
-    public String toString() {
-        return "CaracteristicasDeProdutoRequest{" +
-                "marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", material='" + material + '\'' +
-                ", estilo='" + estilo + '\'' +
-                '}';
-    }
-
-    public CaracteristicasDeProduto toModel() {
-        return new CaracteristicasDeProduto(marca,modelo,material,estilo);
-    }
 }

@@ -1,24 +1,31 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class CaracteristicasDeProduto {
 
-    private String marca;
-    private String modelo;
-    private String material;
-    private String estilo;
+    @Column(nullable = false)
+    private String nome;
 
-    public CaracteristicasDeProduto(String marca, String modelo, String material, String estilo) {
-        this.marca = marca;
-        this.modelo = modelo;
-        this.material = material;
-        this.estilo = estilo;
-    }
+    @Column(nullable = false)
+    private String descricao;
 
     @Deprecated
     public CaracteristicasDeProduto() {
     }
 
+    public CaracteristicasDeProduto(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "CaracteristicasDeProduto{" +
+                "nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
+                '}';
+    }
 }

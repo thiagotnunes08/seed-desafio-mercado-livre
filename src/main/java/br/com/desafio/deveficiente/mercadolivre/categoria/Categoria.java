@@ -3,7 +3,6 @@ package br.com.desafio.deveficiente.mercadolivre.categoria;
 import javax.persistence.*;
 
 @Entity
-
 public class Categoria {
 
     @Id

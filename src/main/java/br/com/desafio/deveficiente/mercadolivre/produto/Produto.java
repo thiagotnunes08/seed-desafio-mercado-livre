@@ -1,6 +1,7 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
+import br.com.desafio.deveficiente.mercadolivre.produto.opniao.Opiniao;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
@@ -46,6 +47,9 @@ public class Produto {
     @ElementCollection
     private List<String> imagems = new ArrayList<>();
 
+    @OneToMany(mappedBy = "produto")
+    private List<Opiniao> opnioes = new ArrayList<>();
+
     public Produto(String nome, BigDecimal valor, Integer quantidadeDisponivel, List<CaracteristicasDeProduto> caracteristicas, String descricao, Categoria categoria, Usuario dono) {
         this.nome = nome;
         this.valor = valor;
@@ -89,6 +93,12 @@ public class Produto {
                 ", criadoEm=" + criadoEm +
                 ", dono=" + dono +
                 ", imagems=" + imagems +
+                ", opnioes=" + opnioes +
                 '}';
     }
+
+    public void adicionaOpiao(Opiniao opiniao) {
+        opnioes.add(opiniao);
+    }
+
 }

@@ -2,7 +2,9 @@ package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -41,6 +43,9 @@ public class Produto {
     @ManyToOne
     private Usuario dono;
 
+    @ElementCollection
+    private List<String> imagems = new ArrayList<>();
+
     public Produto(String nome, BigDecimal valor, Integer quantidadeDisponivel, List<CaracteristicasDeProduto> caracteristicas, String descricao, Categoria categoria, Usuario dono) {
         this.nome = nome;
         this.valor = valor;
@@ -52,10 +57,23 @@ public class Produto {
         this.dono = dono;
         Assert.isTrue(caracteristicas.size() >= 3,
                 "deveria haver no minimo, tres caracteristicas aki");
+
     }
 
     @Deprecated
     public Produto() {
+    }
+
+
+    public List<CaracteristicasDeProduto> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void adicionaEVerificaUser(List<String> imagem, String usuarioLogado){
+        if (!dono.getLogin().equals(usuarioLogado)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"usuário não é dono do produto!");
+        }
+        imagems.addAll(imagem);
     }
 
     @Override
@@ -70,12 +88,7 @@ public class Produto {
                 ", categoria=" + categoria +
                 ", criadoEm=" + criadoEm +
                 ", dono=" + dono +
+                ", imagems=" + imagems +
                 '}';
     }
-
-    public List<CaracteristicasDeProduto> getCaracteristicas() {
-        return caracteristicas;
-    }
-
-
 }

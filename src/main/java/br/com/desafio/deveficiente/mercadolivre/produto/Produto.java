@@ -103,4 +103,36 @@ public class Produto {
     public String getNome() {
         return nome;
     }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public Integer getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public Usuario getDono() {
+        return dono;
+    }
+
+    public List<String> getImagems() {
+        return imagems;
+    }
+
+    public List<Opiniao> getOpnioes() {
+        return opnioes;
+    }
 }

@@ -51,6 +51,8 @@ public class NovaPerguntaController {
 
         email.envia(usuarioLogado,"Você tem uma nova pergunta!",novaPergunta.getTitulo());
 
+        novaPergunta.enviaEmail();
+
       return novaPergunta.toString();
 
 

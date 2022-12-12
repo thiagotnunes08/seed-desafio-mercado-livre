@@ -34,4 +34,8 @@ public class Categoria {
                 ", categoriaMae=" + categoriaMae +
                 '}';
     }
+
+    public String getNome() {
+        return nome;
+    }
 }

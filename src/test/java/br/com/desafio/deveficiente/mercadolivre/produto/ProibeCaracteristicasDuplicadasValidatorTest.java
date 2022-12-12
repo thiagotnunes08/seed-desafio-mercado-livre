@@ -1,5 +1,7 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
 
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProdutoRequest;
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.ProibeCaracteristicasDuplicadasValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

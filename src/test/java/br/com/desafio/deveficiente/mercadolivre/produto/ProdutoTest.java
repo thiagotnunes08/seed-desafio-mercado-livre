@@ -1,6 +1,7 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Senha;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import org.junit.jupiter.api.Assertions;

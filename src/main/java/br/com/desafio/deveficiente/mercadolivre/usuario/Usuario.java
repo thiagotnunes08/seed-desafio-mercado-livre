@@ -1,11 +1,8 @@
 package br.com.desafio.deveficiente.mercadolivre.usuario;
-
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
 import static java.time.LocalDateTime.now;
 
 @Entity

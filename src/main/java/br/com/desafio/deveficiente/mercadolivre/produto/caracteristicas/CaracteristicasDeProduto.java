@@ -1,4 +1,4 @@
-package br.com.desafio.deveficiente.mercadolivre.produto;
+package br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

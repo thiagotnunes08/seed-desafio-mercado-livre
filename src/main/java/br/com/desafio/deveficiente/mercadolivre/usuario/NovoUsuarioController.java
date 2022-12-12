@@ -25,8 +25,6 @@ public class NovoUsuarioController {
 
     @PostMapping
     public void cadastra(@Valid @RequestBody NovoUsuarioRequest request) {
-
-
         Usuario novoUsuario = request.toModel();
         repository.save(novoUsuario);
 

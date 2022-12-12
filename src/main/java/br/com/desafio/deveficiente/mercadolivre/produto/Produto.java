@@ -1,12 +1,11 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
-
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
 import br.com.desafio.deveficiente.mercadolivre.produto.opniao.Opiniao;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -47,7 +46,7 @@ public class Produto {
     @ElementCollection
     private List<String> imagems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
     private List<Opiniao> opnioes = new ArrayList<>();
 
     public Produto(String nome, BigDecimal valor, Integer quantidadeDisponivel, List<CaracteristicasDeProduto> caracteristicas, String descricao, Categoria categoria, Usuario dono) {
@@ -101,4 +100,7 @@ public class Produto {
         opnioes.add(opiniao);
     }
 
+    public String getNome() {
+        return nome;
+    }
 }

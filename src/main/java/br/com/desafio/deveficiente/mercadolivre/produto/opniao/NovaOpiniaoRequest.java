@@ -1,15 +1,14 @@
 package br.com.desafio.deveficiente.mercadolivre.produto.opniao;
-
 import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import br.com.desafio.deveficiente.mercadolivre.usuario.UsuarioRepository;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.persistence.EntityManager;
-import javax.validation.constraints.*;
-import java.util.Optional;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class NovaOpiniaoRequest {
 
@@ -23,8 +22,6 @@ public class NovaOpiniaoRequest {
     private String descricao;
     @NotNull
     private Long produtoId;
-
-
 
     public Integer getNota() {
         return nota;

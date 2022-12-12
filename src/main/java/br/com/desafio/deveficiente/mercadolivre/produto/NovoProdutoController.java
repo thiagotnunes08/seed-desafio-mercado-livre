@@ -1,6 +1,7 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.CategoriaRepository;
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.ProibeCaracteristicasDuplicadasValidator;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import br.com.desafio.deveficiente.mercadolivre.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

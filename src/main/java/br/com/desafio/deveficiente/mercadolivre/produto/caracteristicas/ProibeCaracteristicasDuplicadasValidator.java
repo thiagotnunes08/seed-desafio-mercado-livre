@@ -1,5 +1,6 @@
-package br.com.desafio.deveficiente.mercadolivre.produto;
+package br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas;
 
+import br.com.desafio.deveficiente.mercadolivre.produto.NovoProdutoRequest;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

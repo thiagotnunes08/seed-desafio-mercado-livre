@@ -1,5 +1,4 @@
 package br.com.desafio.deveficiente.mercadolivre.produto.opniao;
-
 import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
 import br.com.desafio.deveficiente.mercadolivre.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

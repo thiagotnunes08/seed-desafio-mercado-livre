@@ -2,6 +2,8 @@ package br.com.desafio.deveficiente.mercadolivre.produto;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.categoria.CategoriaRepository;
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
+import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProdutoRequest;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;

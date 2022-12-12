@@ -21,7 +21,7 @@ public class Opiniao {
     @Column(nullable = false)
     private String descricao;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Produto produto;
 
     @ManyToOne(optional = false)

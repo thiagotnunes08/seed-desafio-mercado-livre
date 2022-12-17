@@ -1,4 +1,5 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
+import br.com.desafio.deveficiente.mercadolivre.categoria.CaracteristicasDeProdutoResponse;
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
 import br.com.desafio.deveficiente.mercadolivre.produto.opniao.Opiniao;
@@ -11,6 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Entity
 public class Produto {
@@ -134,5 +137,9 @@ public class Produto {
 
     public List<Opiniao> getOpnioes() {
         return opnioes;
+    }
+
+    public <T> List<T> mapeiaCaracteristicas(Function<CaracteristicasDeProduto,T> mapper) {
+       return this.caracteristicas.stream().map(mapper).collect(Collectors.toList());
     }
 }

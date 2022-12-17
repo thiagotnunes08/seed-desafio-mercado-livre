@@ -22,13 +22,14 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/api/v1/usuarios").permitAll()
-               .antMatchers(HttpMethod.GET,"/h2/**").permitAll()
-               .antMatchers(HttpMethod.POST,"/h2/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/usuarios").permitAll()
+                .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/h2/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .oauth2ResourceServer()
+                //TODO passar para JWT
                 .opaqueToken();
 
     }
@@ -38,7 +39,6 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
-
 
 
 }

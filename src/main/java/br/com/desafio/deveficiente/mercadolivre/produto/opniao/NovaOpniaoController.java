@@ -30,7 +30,7 @@ public class NovaOpniaoController {
                         @CurrentSecurityContext(expression = "authentication.principal.attributes")
                         Map<Object, Object> username) {
 
-        String usuarioLogado = (String) username.get("user_name");
+        String userName = username.get("user_name").toString();
 
         Produto produto = Optional.ofNullable(manager
                         .find(Produto.class, request.getProdutoId()))
@@ -38,7 +38,7 @@ public class NovaOpniaoController {
                         -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Produto nao encotrado no sitema"));
 
-        Opiniao opiniao = request.toModel(usuarioLogado,produto,repository);
+        Opiniao opiniao = request.toModel(userName,produto,repository);
 
         produto.adicionaOpiao(opiniao);
 

@@ -3,6 +3,8 @@ package br.com.desafio.deveficiente.mercadolivre.produto.opniao;
 public class OpiniaoResponse {
 
     private Integer nota;
+
+
     private String titulo;
     private String descricao;
 

@@ -2,6 +2,7 @@ package br.com.desafio.deveficiente.mercadolivre.produto.opniao;
 
 import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 
@@ -27,12 +28,13 @@ public class Opiniao {
     @ManyToOne(optional = false)
     private Usuario usuario;
 
-    public Opiniao(Integer nota, String titulo, String descricao, Produto produto, Usuario usuario) {
+    public Opiniao(Integer nota, String titulo, String descricao, Produto produto, Usuario usuario ) {
         this.nota = nota;
         this.titulo = titulo;
         this.descricao = descricao;
         this.produto = produto;
         this.usuario = usuario;
+
 
     }
 
@@ -52,7 +54,6 @@ public class Opiniao {
                 '}';
 
 
-
     }
 
     public Integer getNota() {
@@ -66,4 +67,5 @@ public class Opiniao {
     public String getDescricao() {
         return descricao;
     }
+
 }

@@ -1,5 +1,4 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
-
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.categoria.CategoriaRepository;
 import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
@@ -8,7 +7,6 @@ import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -26,6 +24,7 @@ public class NovoProdutoRequest {
     @NotNull
     private BigDecimal valor;
     /**
+     * TODO:LER
      * tanto em bigDecimal quanto em Integer. Poderia ter utilizado @Positive para nao deixar entrar numeros negativos.
      */
     @NotNull

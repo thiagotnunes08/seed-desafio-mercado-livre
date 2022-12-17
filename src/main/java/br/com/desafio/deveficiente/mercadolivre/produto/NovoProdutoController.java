@@ -36,23 +36,24 @@ public class NovoProdutoController {
     public NovoProdutoController(EntityManager manager,
                                  UsuarioRepository usuarioRepository,
                                  CategoriaRepository categoriaRepository) {
+
         this.manager = manager;
         this.usuarioRepository = usuarioRepository;
         this.categoriaRepository = categoriaRepository;
+
     }
 
     @PostMapping
     @Transactional
     public String cadastra(@RequestBody @Valid NovoProdutoRequest request,
-                           @CurrentSecurityContext(expression = "authentication.principal.attributes")
-                         Map<Object, Object> username) {
+                           @CurrentSecurityContext (expression = "authentication.principal.attributes")
+                           Map<Object,String> userName) {
 
-        String usuarioLogado = (String) username.get("user_name");
-
-        Usuario dono = usuarioRepository.findByLogin(usuarioLogado)
+        Usuario dono = usuarioRepository.findByLogin(userName.get("user_name"))
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
                                 "deveria haver um usuário logado aqui."));
+
 
         Produto novoProduto = request.toModel(categoriaRepository, dono);
 

@@ -31,13 +31,14 @@ public class NovaPerguntaController {
     @PersistenceContext
     private EntityManager manager;
 
+
     @PostMapping("produto/perguntas")
     @Transactional
     public String adiciona(@RequestBody @Valid NovaPerguntaRequest request,
                            @CurrentSecurityContext(expression = "authentication.principal.attributes")
                          Map<Object, Object> username) {
 
-        String usuarioLogado = (String) username.get("user_name");
+        String usuarioLogado = username.get("user_name").toString();
 
 
         Usuario usuario = repository.findByLogin(usuarioLogado)

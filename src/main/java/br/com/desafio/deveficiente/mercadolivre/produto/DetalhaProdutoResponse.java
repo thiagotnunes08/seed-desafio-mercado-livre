@@ -60,17 +60,19 @@ public class DetalhaProdutoResponse {
         this.categoria = new CategoriaResponse(produto.getCategoria());
         this.criadoEm = produto.getCriadoEm();
         this.imagens = produto.getImagems();
-
         this.opnioes = produto.getOpnioes()
                 .stream()
                 .map(OpiniaoResponse::new)
                 .collect(Collectors.toList());
+
         //TODO nao há necessidade de passar o objeto de reponse, sendo que precisamos so do titulo, Uma string
         this.perguntas = perguntas.stream()
                 .map(PerguntaResponse::new)
                 .collect(Collectors.toList());
+
         //TODO, criar uma collection de opnioes e isolar logicas la
         double mediaNota = opnioes.stream().mapToInt(OpiniaoResponse::getNota).average().orElse(0.0);
+
         this.mediaNotas = new BigDecimal(mediaNota).setScale(1, RoundingMode.HALF_UP);
 
         this.qtdNota = opnioes.stream().map(OpiniaoResponse::getNota).count();

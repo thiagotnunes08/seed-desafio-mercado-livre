@@ -21,13 +21,6 @@ public class CaracteristicasDeProduto {
         this.descricao = descricao;
     }
 
-    @Override
-    public String toString() {
-        return "CaracteristicasDeProduto{" +
-                "nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                '}';
-    }
 
     public String getNome() {
         return nome;

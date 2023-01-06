@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
-class NovoProdutoRequestTest {
+class NovoProdutoDeCompraRequestTest {
 
 
     @DisplayName("cria produto com diversas caracteristas")

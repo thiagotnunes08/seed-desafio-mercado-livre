@@ -1,5 +1,5 @@
 package br.com.desafio.deveficiente.mercadolivre.produto;
-import br.com.desafio.deveficiente.mercadolivre.categoria.CaracteristicasDeProdutoResponse;
+
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
 import br.com.desafio.deveficiente.mercadolivre.produto.opniao.Opiniao;
@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class Produto {
     @ElementCollection
     private List<String> imagems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "produto",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToMany(mappedBy = "produto", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Opiniao> opnioes = new ArrayList<>();
 
     public Produto(String nome, BigDecimal valor, Integer quantidadeDisponivel, List<CaracteristicasDeProduto> caracteristicas, String descricao, Categoria categoria, Usuario dono) {
@@ -75,29 +77,13 @@ public class Produto {
         return caracteristicas;
     }
 
-    public void adicionaEVerificaUser(List<String> imagem, String usuarioLogado){
-        if (!dono.getLogin().equals(usuarioLogado)){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"usuário não é dono do produto!");
+    public void adicionaEVerificaUser(List<String> imagem, String usuarioLogado) {
+        if (!dono.getLogin().equals(usuarioLogado)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "usuário não é dono do produto!");
         }
         imagems.addAll(imagem);
     }
 
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", valor=" + valor +
-                ", quantidadeDisponivel=" + quantidadeDisponivel +
-                ", caracteristicas=" + caracteristicas +
-                ", descricao='" + descricao + '\'' +
-                ", categoria=" + categoria +
-                ", criadoEm=" + criadoEm +
-                ", dono=" + dono +
-                ", imagems=" + imagems +
-                ", opnioes=" + opnioes +
-                '}';
-    }
 
     public void adicionaOpiao(Opiniao opiniao) {
         opnioes.add(opiniao);
@@ -123,6 +109,10 @@ public class Produto {
         return categoria;
     }
 
+    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
     public LocalDateTime getCriadoEm() {
         return criadoEm;
     }
@@ -139,7 +129,18 @@ public class Produto {
         return opnioes;
     }
 
-    public <T> List<T> mapeiaCaracteristicas(Function<CaracteristicasDeProduto,T> mapper) {
-       return this.caracteristicas.stream().map(mapper).collect(Collectors.toList());
+    public <T> List<T> mapeiaCaracteristicas(Function<CaracteristicasDeProduto, T> mapper) {
+        return this.caracteristicas.stream().map(mapper).collect(Collectors.toList());
     }
+
+    public boolean abateValorNoEstoque(@Positive @NotNull Integer quantidadeASerAbatida) {
+
+        Assert.isTrue(this.quantidadeDisponivel > 0, "não é possivel abater estoque negativo");
+        if (quantidadeASerAbatida <= this.quantidadeDisponivel) {
+            this.quantidadeDisponivel -= quantidadeASerAbatida;
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -42,20 +42,6 @@ public class Opiniao {
     public Opiniao() {
     }
 
-    @Override
-    public String toString() {
-        return "Opiniao{" +
-                "id=" + id +
-                ", nota=" + nota +
-                ", titulo='" + titulo + '\'' +
-                ", descricao='" + descricao + '\'' +
-
-                ", usuario=" + usuario +
-                '}';
-
-
-    }
-
     public Integer getNota() {
         return nota;
     }

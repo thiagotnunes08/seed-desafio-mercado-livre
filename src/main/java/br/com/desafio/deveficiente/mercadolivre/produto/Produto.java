@@ -109,10 +109,6 @@ public class Produto {
         return categoria;
     }
 
-    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
-    }
-
     public LocalDateTime getCriadoEm() {
         return criadoEm;
     }
@@ -134,8 +130,8 @@ public class Produto {
     }
 
     public boolean abateValorNoEstoque(@Positive @NotNull Integer quantidadeASerAbatida) {
+        Assert.isTrue(quantidadeASerAbatida > 0, "não é possivel abater estoque negativo");
 
-        Assert.isTrue(this.quantidadeDisponivel > 0, "não é possivel abater estoque negativo");
         if (quantidadeASerAbatida <= this.quantidadeDisponivel) {
             this.quantidadeDisponivel -= quantidadeASerAbatida;
             return true;
@@ -143,4 +139,7 @@ public class Produto {
         return false;
     }
 
+    public Long getId() {
+        return id;
+    }
 }

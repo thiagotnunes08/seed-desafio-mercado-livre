@@ -4,7 +4,6 @@ import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
 public class Compra {
@@ -80,4 +79,22 @@ public class Compra {
         return produto.getDono().getLogin();
     }
 
+
+    @Override
+    public String toString() {
+
+        return "Compra{" +
+                "id=" + id +
+                ", produto=" + produto +
+                ", quantidade=" + quantidade +
+                ", comprador='" + comprador + '\'' +
+                ", statusCompra=" + statusCompra +
+                ", gatewayPagamento=" + gatewayPagamento +
+                ", valorTotal=" + valorTotal +
+                '}';
+    }
+
+    public void finalizaCompra() {
+        this.statusCompra = StatusCompra.FINALIZADA;
+    }
 }

@@ -64,4 +64,10 @@ public class NovaCompraRequest {
         return gatewayPagamento;
     }
 
+    public NovaCompraRequest(Long produtoId, String comprador, Integer quantidade, GatewayPagamento gatewayPagamento) {
+        this.produtoId = produtoId;
+        this.comprador = comprador;
+        this.quantidade = quantidade;
+        this.gatewayPagamento = gatewayPagamento;
+    }
 }

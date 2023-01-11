@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 @RequestMapping("/api/v1/compras")
@@ -27,6 +28,9 @@ public class NovaCompraController {
     @Autowired
     private EnviaEmail enviaEmail;
 
+    @Autowired
+    EntityManager manager;
+
     @PostMapping
     @Transactional
     public ResponseEntity<?> executa(@RequestBody @Valid NovaCompraRequest request, UriComponentsBuilder builder) throws BindException {
@@ -35,7 +39,8 @@ public class NovaCompraController {
 
         compraRepository.save(novaCompra);
 
-        enviaEmail.envia(novaCompra.login(), "OBA!,nova compra.", "voce tem uma nova compra de:" + request.getComprador());
+        enviaEmail.envia(novaCompra.login(), "OBA! nova compra.", "voce tem uma nova compra de:" + request.getComprador());
+
 
         if (request.getGatewayPagamento().equals(GatewayPagamento.pagseguro)) {
 

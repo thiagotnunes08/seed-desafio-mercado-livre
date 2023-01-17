@@ -1,9 +1,16 @@
 package br.com.desafio.deveficiente.mercadolivre.compra;
-
+import br.com.desafio.deveficiente.mercadolivre.pagamento.Pagamento;
+import br.com.desafio.deveficiente.mercadolivre.pagamento.RetornoGatewayPagamento;
 import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
-
+import br.com.desafio.deveficiente.mercadolivre.util.EnviaEmail;
+import org.springframework.util.Assert;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.springframework.util.Assert.isTrue;
 
 @Entity
 public class Compra {
@@ -30,6 +37,9 @@ public class Compra {
 
     @Column(nullable = false)
     private BigDecimal valorTotal;
+
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
+    private Set<Pagamento> pagamentos = new HashSet<>();
 
 
     @Deprecated
@@ -75,14 +85,13 @@ public class Compra {
     }
 
 
-    public String login(){
+    public String login() {
         return produto.getDono().getLogin();
     }
 
 
     @Override
     public String toString() {
-
         return "Compra{" +
                 "id=" + id +
                 ", produto=" + produto +
@@ -91,10 +100,54 @@ public class Compra {
                 ", statusCompra=" + statusCompra +
                 ", gatewayPagamento=" + gatewayPagamento +
                 ", valorTotal=" + valorTotal +
+                ", pagamentos=" + pagamentos +
                 '}';
     }
 
     public void finalizaCompra() {
         this.statusCompra = StatusCompra.FINALIZADA;
     }
+
+    //TODO: LER 3.0
+    //aki havia um codigo exatamente igual, mudando apenas o argumento "PayPalRequest"
+    //temos duas implementacos diferentes, mas o mesmo comportamento, caso classico de POLIMORFISMO
+    //não há a necessidade de repetir codigo.
+    //pura orientacao objetos
+    // 'implements' == ele é
+    public void adicionaPagamento(RetornoGatewayPagamento retornoGateway) {
+
+        var novoPagamento = retornoGateway.toPagamentos(this);
+
+        isTrue(!this.pagamentos.contains(novoPagamento), "pagamento já processado no sistema!");
+
+        isTrue(buscaPagamentosConcluidos().isEmpty(), "está compra já foi concluida com sucesso!");
+
+        this.pagamentos.add(novoPagamento);
+
+    }
+
+    private Set<Pagamento> buscaPagamentosConcluidos() {
+
+        var pagamentos = this.pagamentos
+                .stream()
+                .filter(Pagamento::foiConcluido)
+                .collect(Collectors.toSet());
+
+        Assert.isTrue(pagamentos.size() <= 1,
+                "BUG, nao deveria ter mais de uma pagamento concluido aki!");
+
+        return pagamentos;
+    }
+
+
+
+    public boolean foiProcessadaComSucesso() {
+        return !buscaPagamentosConcluidos().isEmpty();
+    }
+
+    public Long getVendedor() {
+        return this.produto.getDono().getId();
+    }
 }
+
+

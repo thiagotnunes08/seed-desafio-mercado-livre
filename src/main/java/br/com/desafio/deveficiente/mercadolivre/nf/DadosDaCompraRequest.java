@@ -12,6 +12,10 @@ public class DadosDaCompraRequest {
     @NotNull
     private Long compraId;
 
+    public DadosDaCompraRequest(String comprador, Long compraId) {
+        this.comprador = comprador;
+        this.compraId = compraId;
+    }
 
     public String getComprador() {
         return comprador;

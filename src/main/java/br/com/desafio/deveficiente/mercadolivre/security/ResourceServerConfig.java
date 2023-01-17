@@ -23,6 +23,8 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v1/usuarios").permitAll()
+                .antMatchers(HttpMethod.POST, "/vendas").permitAll()
+                .antMatchers(HttpMethod.POST, "/nf").permitAll()
                 .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/h2/**").permitAll()
                 .anyRequest()

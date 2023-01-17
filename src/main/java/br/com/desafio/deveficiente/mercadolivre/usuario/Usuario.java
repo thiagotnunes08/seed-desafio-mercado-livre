@@ -53,4 +53,8 @@ public class Usuario {
                 ", cadastradoEm=" + cadastradoEm +
                 '}';
     }
+
+    public Long getId() {
+        return id;
+    }
 }

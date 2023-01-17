@@ -1,46 +1,60 @@
 package br.com.desafio.deveficiente.mercadolivre.pagamento;
 
 import br.com.desafio.deveficiente.mercadolivre.compra.CompraRepository;
-import br.com.desafio.deveficiente.mercadolivre.util.EnviaEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
 @RestController
 public class EfetuaOPagamentoController {
 
-    @Autowired
-    private CompraRepository compraRepository;
 
     @Autowired
-    PagamentoRepository pagamentoRepository;
-
+    private final CompraRepository compraRepository;
     @Autowired
-    EnviaEmail enviaEmail;
+    private final EventosNovaCompra eventosNovaCompra;
 
+    public EfetuaOPagamentoController(CompraRepository compraRepository,EventosNovaCompra eventosNovaCompra) {
+        this.compraRepository = compraRepository;
+        this.eventosNovaCompra = eventosNovaCompra;
+    }
 
-    @PostMapping("/pagamentos")
+    @PostMapping("/paypal/pagamentos")
     @Transactional
-    public String executa(@Valid @RequestBody NovoPagamentoRequest request) {
+    public String executa(@Valid @RequestBody ConfirmaPagamentoPaypalRequest request) {
 
-
-        var pagamento = request.toModel(compraRepository);
-
-        pagamentoRepository.save(pagamento);
-
-        //TODO: trocar de string simples para usuario entidade
-        System.out.println(enviaEmail.envia("thiagotomasnunes08@gmail.com",
-                "Pagamento aprovado",
-                "Olá," + pagamento.getComprador() + " está tudo certo com sua compra!"));
-
-        pagamento.finalizaCompra();
-
-        return pagamento.toString();
-
+        return processa(request.getCompraId(), request);
 
     }
+    //TODO colocar validacao de unicidade no idTransacao
+    @PostMapping("/pagseguro/pagamentos")
+    @Transactional
+    public String executa(@Valid @RequestBody ConfirmaPagamentoPagSeguroRequest request) {
+
+        return processa(request.getCompraId(), request);
+    }
+
+    private String processa(Long id, RetornoGatewayPagamento retornoGatewayPagamento) {
+
+        var compra = compraRepository
+                .findById(id)
+                .orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
+                        "Compra inválida, ou não efetuada no sistema!"));
+
+        compra.adicionaPagamento(retornoGatewayPagamento);
+
+        compraRepository.save(compra);
+
+        eventosNovaCompra.processa(compra);
+
+        return compra.toString();
+    }
 }
+

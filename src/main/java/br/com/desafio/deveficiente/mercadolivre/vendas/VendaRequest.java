@@ -1,6 +1,5 @@
 package br.com.desafio.deveficiente.mercadolivre.vendas;
 
-import br.com.desafio.deveficiente.mercadolivre.compra.Compra;
 import br.com.desafio.deveficiente.mercadolivre.compra.CompraRepository;
 import br.com.desafio.deveficiente.mercadolivre.usuario.UsuarioRepository;
 
@@ -12,6 +11,12 @@ public class VendaRequest {
     private Long compraId;
     @NotNull
     private Long vendedorId;
+
+    public VendaRequest(Long id, Long vendedor) {
+        this.compraId = id;
+        this.vendedorId = vendedor;
+
+    }
 
 
     public Long getCompraId() {

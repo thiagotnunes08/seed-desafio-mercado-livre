@@ -1,9 +1,9 @@
 package br.com.desafio.deveficiente.mercadolivre.compra;
+
 import br.com.desafio.deveficiente.mercadolivre.pagamento.Pagamento;
 import br.com.desafio.deveficiente.mercadolivre.pagamento.RetornoGatewayPagamento;
 import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
-import br.com.desafio.deveficiente.mercadolivre.util.EnviaEmail;
-import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -133,20 +133,27 @@ public class Compra {
                 .filter(Pagamento::foiConcluido)
                 .collect(Collectors.toSet());
 
-        Assert.isTrue(pagamentos.size() <= 1,
+        isTrue(pagamentos.size() <= 1,
                 "BUG, nao deveria ter mais de uma pagamento concluido aki!");
 
         return pagamentos;
     }
 
 
-
     public boolean foiProcessadaComSucesso() {
         return !buscaPagamentosConcluidos().isEmpty();
+        //TODO: ler 4.0
+        //outra solução sem a necessidade de acrescentar uma negação, logo nao teria a necessidade de testar
+        // (test4 da uma olhadinha la).
+        //return buscaPagamentosConcluidos().iterator().hasNext();
     }
 
     public Long getVendedor() {
         return this.produto.getDono().getId();
+    }
+
+    public Set<Pagamento> getPagamentos() {
+        return pagamentos;
     }
 }
 

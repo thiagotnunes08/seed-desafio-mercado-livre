@@ -36,6 +36,7 @@ class NovoUsuarioControllerTest {
 
         var payload = mapper.writeValueAsString(novoUsuario);
 
+        //TODO: colocar o token nas request
         var request = post("/api/usuarios")
                 .content(payload)
                 .contentType(MediaType.APPLICATION_JSON);

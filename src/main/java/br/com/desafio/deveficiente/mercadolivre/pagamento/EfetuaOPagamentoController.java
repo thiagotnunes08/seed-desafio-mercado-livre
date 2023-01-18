@@ -1,5 +1,4 @@
 package br.com.desafio.deveficiente.mercadolivre.pagamento;
-
 import br.com.desafio.deveficiente.mercadolivre.compra.CompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.Valid;
 
 @RestController
@@ -20,7 +18,7 @@ public class EfetuaOPagamentoController {
     @Autowired
     private final EventosNovaCompra eventosNovaCompra;
 
-    public EfetuaOPagamentoController(CompraRepository compraRepository,EventosNovaCompra eventosNovaCompra) {
+    public EfetuaOPagamentoController(CompraRepository compraRepository, EventosNovaCompra eventosNovaCompra) {
         this.compraRepository = compraRepository;
         this.eventosNovaCompra = eventosNovaCompra;
     }

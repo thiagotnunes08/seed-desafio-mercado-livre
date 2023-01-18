@@ -2,7 +2,6 @@ package br.com.desafio.deveficiente.mercadolivre.compra;
 
 import br.com.desafio.deveficiente.mercadolivre.categoria.Categoria;
 import br.com.desafio.deveficiente.mercadolivre.produto.Produto;
-import br.com.desafio.deveficiente.mercadolivre.produto.ProdutoRepository;
 import br.com.desafio.deveficiente.mercadolivre.produto.caracteristicas.CaracteristicasDeProduto;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Senha;
 import br.com.desafio.deveficiente.mercadolivre.usuario.Usuario;
@@ -11,8 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.validation.BindException;
 
 import java.math.BigDecimal;

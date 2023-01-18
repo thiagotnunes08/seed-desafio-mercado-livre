@@ -9,6 +9,8 @@ import br.com.desafio.deveficiente.mercadolivre.vendas.VendaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+//TODO: DPS que assistir o novo curso de teste, voltar aki e testar de vdd
 @Service
 public class EventosNovaCompra {
 

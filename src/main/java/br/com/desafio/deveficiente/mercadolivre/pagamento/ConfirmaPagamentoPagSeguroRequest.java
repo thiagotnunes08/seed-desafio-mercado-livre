@@ -34,6 +34,7 @@ public class ConfirmaPagamentoPagSeguroRequest implements RetornoGatewayPagament
                 '}';
     }
 
+
     public Pagamento toPagamentos(Compra compra) {
         return new Pagamento(compra,idTransacao,status.normaliza());
     }
